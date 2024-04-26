@@ -9,9 +9,10 @@ class Program
         Random randomNumberGenerator = new Random();
         int magicNumber = randomNumberGenerator.Next(1, 101);
         
-        // Initialize the guessNumber variable to -1, which will be used to store the user's guessed number.
+        //initialize the guessNumber variable to -1, which will be used to store the user's guessed number.
         int guessNumber = -1;
 
+        //loop that will ask for the number untill the correct number is selected
         while (guessNumber != magicNumber)
         {
             Console.Write("What is your guess? ");
