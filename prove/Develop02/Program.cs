@@ -7,7 +7,7 @@ class Program
 
         /* This program exceeds the core requirements by using a CSV 
         file to improve the process of savingthe entries, the created 
-        file can be opened in Exel also the previous entries will not 
+        file can be opened in Excel also the previous entries will not 
         be deleted if the user uses the same file to save new entries. */ 
 
 
