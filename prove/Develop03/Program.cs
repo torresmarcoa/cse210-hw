@@ -48,7 +48,7 @@ class Program
             // If the user does nor type quit the program will propmpt if the user wants to restart the program
             if (choice != "quit")
             {
-                Console.WriteLine("Would you like to start again the program? (Press enter to close, type 'y' to reestart the program)");
+                Console.WriteLine("Would you like to start again the program? (Press enter to close, type 'y' to restart the program)");
                 string restart = Console.ReadLine();
 
                 // If the user doesn't want to restart, break the outer loop
