@@ -7,12 +7,13 @@ class Program
     // This program exceeds the requirements by adding an option to restart the program after all the words are hidden.
     // It uses a nested do-while loop structure where the outer loop controls the program's execution, 
     // and the inner loop handles displaying the scripture text and processing user input.
+    // Also, the program is designed to not repeat any hidden word, so it will always hide another word.
 
     static void Main(string[] args)
     {
         // Outer do-while loop to control the program's execution, it keeps running untill the 
         // user decides to quit (break the loop)
-        
+
         do
         {
             // Variable that stores the user's choice
