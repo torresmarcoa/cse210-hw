@@ -3,6 +3,7 @@ using System.Data;
 
 public class ReflectingActivity : Activity
 {
+    // Lists of prompts and questions for the activity
     private List<string> _prompts = new List<string>{"Think of a time when you stood up for someone else.",
     "Think of a time when you did something really difficult.",
     "Think of a time when you helped someone in need.",
@@ -16,16 +17,19 @@ public class ReflectingActivity : Activity
     "What did you learn about yourself through this experience?",
     "How can you keep this experience in mind in the future?"};
 
+    // Constructor that initializes the name and description of the activity
     public ReflectingActivity()
     {
         _name = "Reflecting";
         _description = "This activity will help you reflect on times in your life when you have shown strength and resilience. This will help you recognize the power you have and how you can use it in other aspects of your life.";
     }
 
+    // Method to run the activity
     public void Run()
     {
         DisplayStartingMessage();
 
+        // Display a prompt for the user
         Console.WriteLine("Consider the following prompt:");
         Console.WriteLine();
         DisplayPrompt();
@@ -41,6 +45,7 @@ public class ReflectingActivity : Activity
         DateTime startTime = DateTime.Now;
         DateTime endTime = startTime.AddSeconds(_duration);
 
+        // Loop to display a question for the user until the duration is reached 
         do
         {
             DisplayQuestions();
@@ -55,6 +60,7 @@ public class ReflectingActivity : Activity
 
     }
 
+    // Method to get a random prompt
     public string GetRandomPrompt()
     {
         Random random = new Random();
@@ -64,6 +70,7 @@ public class ReflectingActivity : Activity
         return _prompts[randomIndex];
     }
 
+    // Method to get a random question
     public string GetRandomQuestion()
     {
         Random random = new Random();
@@ -73,11 +80,13 @@ public class ReflectingActivity : Activity
         return _questions[randomIndex];
     }
 
+    // Method to display the prompt
     public void DisplayPrompt()
     {
         Console.WriteLine($"_____ {GetRandomPrompt()} _____");
     }
 
+    // Method to dislpay the random question
     public void DisplayQuestions()
     {
         Console.Write($"> {GetRandomQuestion()} -");
