@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Reflection.Metadata;
+using System.Runtime;
 using System.Runtime.Serialization;
 
 public class GoalManager
@@ -117,11 +118,19 @@ public class GoalManager
         }
         else if (goalChoice == "2")
         {
-
+            EternalGoal eternalGoal = new EternalGoal(name, description, points);
+            _goals.Add(eternalGoal);
         }
         else if (goalChoice == "3")
         {
-
+            int target; 
+            int bonus;
+            Console.Write("How many times does this goal need to be acomplished for a bonus? "); 
+            target = int.Parse(Console.ReadLine());
+            Console.Write("What is the bonus for accomplishing it that many times? ");
+            bonus = int.Parse(Console.ReadLine());
+            ChecklistGoal checklistGoal = new ChecklistGoal(name, description, points, target, bonus);
+            _goals.Add(checklistGoal);
         }
         else
         {
@@ -152,11 +161,58 @@ public class GoalManager
 
     public void SaveGoals()
     {
+        string fileName;
+        Console.Write("What is the filename for the goal file? ");
+        fileName = Console.ReadLine();
 
+        using (StreamWriter writer = new StreamWriter(fileName))
+        {
+            writer.WriteLine(_score);
+
+            foreach (Goal goal in _goals)
+            {
+                writer.WriteLine(goal.GetStringRepresentation());
+            }
+        }
+        Console.WriteLine("Goals saved.");
     }
 
     public void LoadGoals()
     {
+        string fileName;
+        Console.Write("What is the filename for the goal file? ");
+        fileName = Console.ReadLine();
 
+        if (File.Exists(fileName))
+        {
+            using (StreamReader reader = new StreamReader(fileName))
+            {
+                _score = int.Parse(reader.ReadLine());
+                _goals.Clear();
+                string line;
+
+                while ((line = reader.ReadLine()) != null)
+                {
+                    string[] parts = line.Split("|");
+
+                    if (parts[0] == "SimpleGoal")
+                    {
+                        _goals.Add(new SimpleGoal(parts[1], parts[2], int.Parse(parts[3]), bool.Parse(parts[4])));
+                    }
+                    else if (parts[0] == "EternalGoal")
+                    {
+                        _goals.Add(new EternalGoal(parts[1], parts[2], int.Parse(parts[3])));
+                    }
+                    else if (parts[0] == "ChecklistGoal")
+                    {
+                        _goals.Add(new ChecklistGoal(parts[1], parts[2], int.Parse(parts[3]), int.Parse(parts[4]), int.Parse(parts[5]), int.Parse(parts[6])));
+                    }
+                }
+            }
+        }
+        else 
+        {
+            Console.WriteLine($"The file {fileName} does not exist.");
+        }
     }
 }

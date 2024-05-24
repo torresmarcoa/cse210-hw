@@ -25,14 +25,7 @@ public abstract class Goal
 
     public virtual string GetDetailsString()
     {
-        if (IsComplete() == true)
-        {
-            return $"[x] {_shortName} ({_description})";
-        }
-        else
-        {
-            return $"[ ] {_shortName} ({_description})";
-        }
+       return $"{(IsComplete() ? "[x]" : "[ ]")} {_shortName} ({_description})";
 
     }
 
