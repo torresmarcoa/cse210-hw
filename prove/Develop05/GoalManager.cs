@@ -7,22 +7,29 @@ using System.Runtime.Serialization;
 
 public class GoalManager
 {
+    // Variable to store the User's Goals, score and levels
     private List<Goal> _goals;
     private int _score;
+    private Levels _levels;
 
+    // Constructor that initializes the Goal manager with default values
     public GoalManager()
     {
         _goals = new List<Goal>();
         _score = 0;
+        _levels = new Levels();
     }
 
+    // Method that start the whole program
     public void Start()
     {
         string choice;
 
+        // Menu
         do
         {
             DisplayPlayerInfo();
+
             Console.WriteLine();
             Console.WriteLine("Menu Options");
             Console.WriteLine("     1. Create a New Goal");
@@ -67,11 +74,14 @@ public class GoalManager
         while (choice != "6");
 
     }
-
+    // Method to display player's score and level
     public void DisplayPlayerInfo()
     {
         Console.WriteLine($"You have {_score} points");
+        _levels.GetDetails();
     }
+
+    // Method to list the names of all goals
     public void ListGoalNames()
     {
         int i = 1;
@@ -81,6 +91,8 @@ public class GoalManager
             i++;
         }
     }
+
+    // Method to list details of all goals
     public void ListGoalDetails()
     {
         int i = 1;
@@ -91,6 +103,8 @@ public class GoalManager
             i++;
         }
     }
+
+    // Method to create a new goal
     public void CreateGoal()
     {
         string goalChoice;
@@ -123,9 +137,9 @@ public class GoalManager
         }
         else if (goalChoice == "3")
         {
-            int target; 
+            int target;
             int bonus;
-            Console.Write("How many times does this goal need to be acomplished for a bonus? "); 
+            Console.Write("How many times does this goal need to be acomplished for a bonus? ");
             target = int.Parse(Console.ReadLine());
             Console.Write("What is the bonus for accomplishing it that many times? ");
             bonus = int.Parse(Console.ReadLine());
@@ -139,6 +153,8 @@ public class GoalManager
 
     }
 
+
+    // Method to record goal accomplishment
     public void RecordEvent()
     {
         int goalIndex;
@@ -150,6 +166,7 @@ public class GoalManager
         {
             int points = _goals[goalIndex - 1].RecordEvent();
             _score += points;
+            _levels.AddPoints(points);
             Console.WriteLine($"Congratulations! You have earned {points} points!");
             Console.WriteLine($"You now have {_score} points.");
         }
@@ -159,6 +176,7 @@ public class GoalManager
         }
     }
 
+    // Method to save goals to a file
     public void SaveGoals()
     {
         string fileName;
@@ -168,7 +186,7 @@ public class GoalManager
         using (StreamWriter writer = new StreamWriter(fileName))
         {
             writer.WriteLine(_score);
-
+            writer.WriteLine(_levels.GetStringRepresentation());
             foreach (Goal goal in _goals)
             {
                 writer.WriteLine(goal.GetStringRepresentation());
@@ -177,6 +195,7 @@ public class GoalManager
         Console.WriteLine("Goals saved.");
     }
 
+    // Method to load goals from a file
     public void LoadGoals()
     {
         string fileName;
@@ -190,6 +209,9 @@ public class GoalManager
                 _score = int.Parse(reader.ReadLine());
                 _goals.Clear();
                 string line;
+
+                // Load level information
+                _levels = Levels.FromStringRepresentation(reader.ReadLine());
 
                 while ((line = reader.ReadLine()) != null)
                 {
@@ -208,9 +230,10 @@ public class GoalManager
                         _goals.Add(new ChecklistGoal(parts[1], parts[2], int.Parse(parts[3]), int.Parse(parts[4]), int.Parse(parts[5]), int.Parse(parts[6])));
                     }
                 }
+
             }
         }
-        else 
+        else
         {
             Console.WriteLine($"The file {fileName} does not exist.");
         }
