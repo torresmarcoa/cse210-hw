@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 
 public class Event
 {
+    // Member variables to store event information
     protected string _title;
     protected string _description;
     protected string _date;
@@ -11,6 +12,7 @@ public class Event
     protected Address _address;
     protected string _type;
 
+    // Constructor to initialize an event
     public Event(string title, string description, string date, string time, Address address, string type)
     {
         _title = title;
@@ -21,6 +23,7 @@ public class Event
         _type = type;
     }
 
+    // Method to get the standart details
     public void GetStandartDetails()
     {
         Console.WriteLine($"{_title} - {_description}");
@@ -28,6 +31,8 @@ public class Event
         Console.WriteLine($"{_address.GetAddressString()}");
         Console.WriteLine();
     }
+
+    // Method to get the short details
     public void GetShortDescription()
     {
         Console.WriteLine($"{_type} - {_title} - {_date}");
